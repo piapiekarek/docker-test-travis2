@@ -3,5 +3,14 @@ services:
     - docker
 
 script:
-    - docker build -t piapi/node
-    - docker images piapi/node
+    - docker build -t DOCKER_USERNAME/node
+    - docker images DOCKER_USERNAME/node
+
+before_deploy:
+    - docker login -u DOCKER_USERNAME -p DOCKER_PASSWORD
+
+deploy:
+    provider: script
+    script: docker push DOCKER_USERNAME/fullstack
+    on:
+        branch: master
